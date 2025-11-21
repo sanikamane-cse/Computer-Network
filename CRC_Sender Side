@@ -1,0 +1,37 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+    int msg[8], code[12]; // msg[1..7], code[1..11]
+    int i;
+
+    cout << "Enter 7 message bits (0 or 1): ";
+    for (i = 1; i <= 7; i++)
+        cin >> msg[i];
+
+    // Initialize all bits to 0
+    for (i = 1; i <= 11; i++)
+        code[i] = 0;
+
+    // Place data bits
+    code[3]  = msg[1];
+    code[5]  = msg[2];
+    code[6]  = msg[3];
+    code[7]  = msg[4];
+    code[9]  = msg[5];
+    code[10] = msg[6];
+    code[11] = msg[7];
+
+    // Calculate parity bits
+    code[1] = code[3] ^ code[5] ^ code[7] ^ code[9] ^ code[11];
+    code[2] = code[3] ^ code[6] ^ code[7] ^ code[10] ^ code[11];
+    code[4] = code[5] ^ code[6] ^ code[7];
+    code[8] = code[9] ^ code[10] ^ code[11];
+
+    cout << "\nEncoded 11-bit Hamming Code: ";
+    for (i = 1; i <= 11; i++)
+        cout << code[i];
+
+    cout << endl;
+    return 0;
+}
