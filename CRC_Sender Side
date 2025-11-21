@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int data[20], divisor[10], temp[20], remainder[10];
+    int data_bits, divisor_bits, total_bits;
+    int i, j;
+
+    cout << "Enter number of data bits: ";
+    cin >> data_bits;
+
+    cout << "Enter data bits (0 or 1): ";
+    for (i = 0; i < data_bits; i++)
+        cin >> data[i];
+
+    cout << "Enter number of divisor bits: ";
+    cin >> divisor_bits;
+
+    cout << "Enter divisor bits (0 or 1): ";
+    for (i = 0; i < divisor_bits; i++)
+        cin >> divisor[i];
+
+    // Append (divisor_bits - 1) zeros to data bits
+    total_bits = data_bits + divisor_bits - 1;
+    for (i = 0; i < data_bits; i++)
+        temp[i] = data[i];
+    for (i = data_bits; i < total_bits; i++)
+        temp[i] = 0;
+
+    // Perform modulo-2 division
+    for (i = 0; i < data_bits; i++) {
+        if (temp[i] == 1) {
+            for (j = 0; j < divisor_bits; j++)
+                temp[i + j] = temp[i + j] ^ divisor[j]; // XOR operation
+        }
+    }
+
+    // The remainder is the last (divisor_bits - 1) bits
+    for (i = 0; i < divisor_bits - 1; i++)
+        remainder[i] = temp[data_bits + i];
+
+    // Display the CRC bits
+    cout << "\nCRC bits (Remainder): ";
+    for (i = 0; i < divisor_bits - 1; i++)
+        cout << remainder[i];
+
+    // Append remainder to data bits to get transmitted codeword
+    cout << "\nTransmitted Codeword: ";
+    for (i = 0; i < data_bits; i++)
+        cout << data[i];
+    for (i = 0; i < divisor_bits - 1; i++)
+        cout << remainder[i];
+
+    cout << endl;
+    return 0;
+}
+
+
