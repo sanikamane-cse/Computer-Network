@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    string stuffed, destuffed = "";
+    int count = 0;
+    cout << "Enter stuffed bits : ";
+    cin >> stuffed;
+
+    for (int i = 0; i < stuffed.size(); i++) {
+        destuffed += stuffed[i];
+
+        if (stuffed[i] == '1') count++;
+        else count = 0;
+
+        if (count == 5) {
+            i++;
+            count = 0;
+        }
+    }
+
+    cout << "After bit De stuffing : " << destuffed;
+}
