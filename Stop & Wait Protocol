@@ -1,0 +1,35 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    int totalFrames;
+    cout << "Enter number of frames to send : ";
+    cin >> totalFrames;
+
+    srand(time(0));
+    int frameNumber = 1;
+
+    while (frameNumber <= totalFrames) {
+
+        cout << "\nSender : Sending frame " << frameNumber << endl;
+
+        if (rand() % 2 == 0) {
+            // ACK lost
+            cout << "Receiver : Ack " << frameNumber << " lost!" << endl;
+            cout << "Sender : Timeout! Resending frame " << frameNumber << endl;
+        }
+        else {
+            // ACK received
+            cout << "Receiver : Sending Ack " << frameNumber << endl;
+            cout << "Sender : Ack " << frameNumber << " received!" << endl;
+            frameNumber++;
+        }
+
+        cout << "------------------------" << endl;
+    }
+
+    cout << "\nAll frames sent and acknowledged successfully!" << endl;
+    return 0;
+}
