@@ -1,0 +1,59 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main() {
+    char data[70], divisor[20];
+    int data_len, div_len;
+    int i, j;
+    char rem[20];
+
+    cout << "Enter received data (data + CRC): ";
+    cin >> data;
+
+    cout << "Enter generator (divisor) bits: ";
+    cin >> divisor;
+
+    data_len = strlen(data);
+    div_len = strlen(divisor);
+
+    for (i = 0; i < div_len; i++) {
+        rem[i] = data[i];
+    }
+
+    for (i = 0; i < data_len - div_len + 1; i++) {
+        if (rem[0] == '1') {
+            for (j = 0; j < div_len; j++) {
+                rem[j] = (rem[j] == divisor[j]) ? '0' : '1';
+            }
+        } else {
+            for (j = 0; j < div_len; j++) {
+                rem[j] = (rem[j] == '0') ? '0' : '1';
+            }
+        }
+
+        if (i < data_len - div_len) {
+            for (j = 0; j < div_len - 1; j++) {
+                rem[j] = rem[j + 1];
+            }
+            rem[j] = data[i + div_len];
+        }
+    }
+
+    rem[div_len - 1] = '\0';
+
+    int error = 0;
+    for (i = 0; i < div_len - 1; i++) {
+        if (rem[i] != '0') {
+            error = 1;
+            break;
+        }
+    }
+
+    if (error == 0)
+        cout << "No Error: Data received correctly.\n";
+    else
+        cout << "Error detected in received data.\n";
+
+    return 0;
+}
